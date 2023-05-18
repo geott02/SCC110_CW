@@ -1,6 +1,22 @@
 
 public class mainClass {
 
+    private Rectangle rectangle;
+    private Ball ball;
+    private Ball innerMiddle;
+    private Ball outerMiddle;
+    private Ball player1;
+    private Ball player2;
+    private Line lineTop;
+    private Line lineBottom;
+    private Line lineLeft;
+    private Line lineRight;
+    private Line lineMiddleTop;
+    private Line lineMiddleBottom;
+    private Line linePlayer1Goal;
+    private Line linePlayer2Goal;
+   // private GameArena game;
+
 public static void main(String[] args) {
 
     GameArena game =new GameArena(700,400,true);
@@ -47,8 +63,41 @@ public static void main(String[] args) {
     Line player2Goal = new Line(640,150,640,250,10,"GREY",7);
     game.addLine(player2Goal);
 
+    while(true){
+        if (game.upPressed())
+        if(player1.getYPosition() > 85)
+        player1.move(0,-5);
 
+        if (game.downPressed())
+        if(player1.getYPosition() < 315)
+        player1.move(0,5);
+
+        if (game.leftPressed())
+        if(player1.getXPosition() > 85) 
+        player1.move(-5,0);
+
+        if (game.rightPressed())
+        if(player1.getXPosition() < 325)
+        player1.move(5,0);
+
+        if (game.letterPressed('w'))
+        if(player2.getYPosition() > 85)
+        player2.move(0,-5);
+
+        if (game.letterPressed('s'))
+        if(player2.getYPosition() < 315) 
+        player2.move(0,5);
+
+        if (game.letterPressed('a'))
+        if(player2.getXPosition() > 375) 
+        player2.move(-5,0);
+
+        if (game.letterPressed('d'))
+        if(player2.getXPosition() < 615) 
+        player2.move(5,0);
+
+
+        game.pause();
+    }
 }
-
-
 }
