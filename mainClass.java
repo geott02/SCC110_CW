@@ -24,7 +24,7 @@ public class mainClass {
     private static double xPlayer2Speed = 1;
     private static int player1Score = 0;
     private static int player2Score = 0;
-
+    private static int gameOver = 0;
 
 public static void main(String[] args) {
 
@@ -37,7 +37,7 @@ public static void main(String[] args) {
     Rectangle rectangle = new Rectangle(50, 50, 600, 300, "WHITE");
     game.addRectangle(rectangle);
     
-    Ball puck = new Ball(350, 200, 16, "BLACK",6);
+    Ball puck = new Ball(350, 200, 16, "BLACK",9);
     game.addBall(puck);
 
     Ball innerMiddle = new Ball(350, 200, 88, "WHITE",3);
@@ -46,10 +46,10 @@ public static void main(String[] args) {
     Ball outerMiddle = new Ball(350, 200, 90, "BLUE",2);
     game.addBall(outerMiddle);
 
-    Ball player1 = new Ball(150, 200, 50, "BLACK",4);
+    Ball player1 = new Ball(150, 200, 50, "BLACK",10);
     game.addBall(player1);
 
-    Ball player2 = new Ball(550, 200, 50, "BLACK",4);
+    Ball player2 = new Ball(550, 200, 50, "BLACK",10);
     game.addBall(player2);
 
     Line lineTop = new Line(50,50,650,50,20,"RED",6);
@@ -76,58 +76,67 @@ public static void main(String[] args) {
     Line player2Goal = new Line(640,150,640,250,10,"GREY",7);
     game.addLine(player2Goal);
 
-    Text player1Counter = new Text("The Score is:",100,350,200,"BLACK",10);
+    Text player1Counter = new Text("0",50,605,100,"GREY",8);
+    game.addText(player1Counter);
 
+    Text player2Counter = new Text("0",50,60,100,"GREY",8);
+    game.addText(player2Counter);
 
+    Text playerWin = new Text("",25,245,120,"BLACK",11);
+    game.addText(playerWin);
+
+    Text playAgain = new Text("",15,245,150,"GREEN",11);
+    game.addText(playAgain);
 
     while(true){
 
-        
+    if(gameOver == 0){
+
         if (game.upPressed())
         if(player1.getYPosition() > 85){
-        yPlayer1Speed = -2;
+        yPlayer1Speed = -4;
         player1.move(0,-5);
         }
 
         if (game.downPressed())
         if(player1.getYPosition() < 315){
-        yPlayer1Speed = 2;
+        yPlayer1Speed = 4;
         player1.move(0,5);
         }
 
         if (game.leftPressed())
         if(player1.getXPosition() > 85){
-        xPlayer1Speed = -2;
+        xPlayer1Speed = -4;
         player1.move(-5,0);
         }
 
         if (game.rightPressed())
         if(player1.getXPosition() < 325){
-        xPlayer1Speed = 2;
+        xPlayer1Speed = 4;
         player1.move(5,0);
         }
 
         if (game.letterPressed('w'))
         if(player2.getYPosition() > 85){
-        yPlayer2Speed = -2;
+        yPlayer2Speed = -4;
         player2.move(0,-5);
         }
 
         if (game.letterPressed('s'))
         if(player2.getYPosition() < 315){ 
-        yPlayer2Speed = 2;
+        yPlayer2Speed = 4;
         player2.move(0,5);
         }
         
         if (game.letterPressed('a'))
         if(player2.getXPosition() > 375){ 
-        xPlayer2Speed = -2;
+        xPlayer2Speed = -4;
         player2.move(-5,0);
         }
 
         if (game.letterPressed('d'))
         if(player2.getXPosition() < 615){
-        xPlayer2Speed = 2;
+        xPlayer2Speed = 4;
         player2.move(5,0);
         }
 
@@ -162,6 +171,20 @@ public static void main(String[] args) {
         player1.setYPosition(200);
         player2.setXPosition(550);
         player2.setYPosition(200);
+        player1Counter.setText("" + player1Score);
+        }
+
+        if(player1Score == 2){
+        playerWin.setText("Player 1 Wins!");
+        playAgain.setText("press 'Enter' to play again");
+        gameOver = 1;
+        }
+
+        if(player2Score == 2){
+        playerWin.setText("Player 2 Wins!");
+        playAgain.setText("press 'Enter' to play again");
+        gameOver = 1;
+        ;
         }
 
         if (puck.getXPosition() >= 632 && puck.getYPosition() <=250 && puck.getYPosition() >=150 ) {
@@ -175,6 +198,9 @@ public static void main(String[] args) {
         player1.setYPosition(200);
         player2.setXPosition(550);
         player2.setYPosition(200);
+        //player2Counter.setXPosition(175);
+        //player2Counter.setYPosition(200);
+        player2Counter.setText("" + player2Score);
         }
 
         if (player1.collides(puck))
@@ -188,16 +214,36 @@ public static void main(String[] args) {
 
         gameInstance.applyFriction();
 
-        game.pause();
     }
 
+        if(game.enterPressed() && gameOver == 1){
+            puck.setXPosition(350);
+            puck.setYPosition(200);
+            player1.setXPosition(150);
+            player1.setYPosition(200);
+            player2.setXPosition(550);
+            player2.setYPosition(200);
+            player1Counter.setText("" + player1Score);
+            player1Score = 0;
+            player2Score = 0;
+            player1Counter.setText("0");
+            player2Counter.setText("0");
+            playerWin.setText("");
+            playAgain.setText("");
+            gameOver = 0;
+            }
+    
+
+        game.pause();
+    }
+}
 
 
     
- }
+ 
     public void applyFriction(){
-    xPuckSpeed = xPuckSpeed * 0.99;
-    yPuckSpeed = yPuckSpeed * 0.99;   
+    xPuckSpeed = xPuckSpeed * 0.991;
+    yPuckSpeed = yPuckSpeed * 0.991;   
  }
 
 
