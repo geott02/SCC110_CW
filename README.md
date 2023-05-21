@@ -3,6 +3,7 @@
 This repository contains the following files for the SCC.110 project "Air Hockey" (Project 2 in 2022/23):
 
 **Java classes (.java files)**
++ mainClass
 + Ball.java
 + GameArena.java
 + Line.java
